@@ -59,3 +59,6 @@ python3 cli.py --license YOUR_LICENSE_KEY --java-directory /path/to/java/project
 ### Windows
 - Windows 10 x64 and later versions
 - Windows 11 x64
+
+## Contact
+Have questions or need support? Reach out to our team at [info@omni4j.com](mailto:info@omni4j.com) or visit our website for more details at [omni4j.com](https://omni4j.com).
