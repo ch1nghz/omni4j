@@ -1,6 +1,6 @@
 # Terms and Conditions
 
-_Last Updated 30 July 2024_
+_Last Updated 6 August 2024_
 
 Welcome to omni4j. These terms and conditions outline the rules and regulations for the use of omni4j, a Static Application Security Testing (SAST) tool. By downloading, installing, or using omni4j, you accept these terms and conditions in full. If you disagree with these terms and conditions or any part thereof, you must not use omni4j.
 
@@ -13,6 +13,8 @@ Subject to the terms and conditions of this Agreement, the author (hereinafter r
 ### Generation and Use
 
 The license key for omni4j is generated via the IntelliJ plugin or the CLI script and is valid for one month for free. Upon expiration, you must contact [info@omni4j.com](mailto:info@omni4j.com) to extend the license. The license key is restricted to a single computer. Once the license key has been activated on a computer, it cannot be used on any other computer without prior authorization from the omni4j support team.
+
+When registering, the user must provide their legal name, surname, and business email. Any fake accounts detected will be removed from the system and are prohibited by the Licensor.
 
 ### Single-Use
 
