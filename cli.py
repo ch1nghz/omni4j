@@ -44,8 +44,11 @@ def md5_hash(text):
 def download_binary(license_key):
     os_name = platform.system().lower()
     os_arch = platform.machine().lower()
-    if 'darwin' in os_name and 'arm' in os_arch:
-        architecture = 'macos-arm'
+    if 'darwin' in os_name:
+        if 'arm' in os_arch:
+            architecture = 'macos-arm'
+        elif 'x86_64' in os_arch:
+            architecture = 'macos-intel'
     elif 'win' in os_name:
         architecture = 'windows'
     elif 'linux' in os_name:
