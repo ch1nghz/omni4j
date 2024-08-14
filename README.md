@@ -54,7 +54,7 @@ python3 cli.py --license YOUR_LICENSE_KEY --java-directory /path/to/java/project
 - Arch Linux (rolling release with updates)
 
 ### macOS
-- macOS 11.0 (Big Sur) and later versions (only ARM architectures)
+- macOS 11.0 (Big Sur) and later versions
 
 ### Windows
 - Windows 10 x64 and later versions
